@@ -30,4 +30,17 @@ public class WordCountTest {
         wordCountList.add("the - 25");
         assertThat(underTest.createWordCountList(wordCountMap), is(wordCountList));
     }
+
+    @Test
+    public void shouldConvertAWordCountMapWithMultipleEntriesIntoAListOfFormattedStrings() {
+        Map<String, Integer> wordCountMap = new HashMap<>();
+        wordCountMap.put("the", 25);
+        wordCountMap.put("every", 10);
+        List<String> wordCountList = new ArrayList<>();
+        wordCountList.add("the - 25");
+        wordCountList.add("every - 10");
+        assertThat(underTest.createWordCountList(wordCountMap), is(wordCountList));
+    }
+
+
 }
