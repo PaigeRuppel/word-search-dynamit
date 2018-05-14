@@ -27,19 +27,14 @@ public class WordCountTest {
     }
 
     @Test
-    public void shouldConvertAWordCountMapIntoAListOfFormattedStrings() {
-        Map<String, Integer> wordCountMap = new HashMap<>();
-        wordCountMap.put("the", 25);
-        List<String> wordCountList = Arrays.asList("the - 25");
-        assertThat(underTest.createWordCountList(wordCountMap), is(wordCountList));
-    }
-
-    @Test
-    public void shouldConvertAWordCountMapWithMultipleEntriesIntoAListOfFormattedStrings() {
+    public void shouldConvertAWordCountMapWithMultipleEntriesIntoAnOrderedListOfFormattedStrings() {
         Map<String, Integer> wordCountMap = new HashMap<>();
         wordCountMap.put("the", 25);
         wordCountMap.put("every", 10);
-        List<String> wordCountList = Arrays.asList("the - 25", "every - 10");
+        wordCountMap.put("of", 15);
+        wordCountMap.put("yes", 1);
+        wordCountMap.put("at", 25);
+        List<String> wordCountList = Arrays.asList("the - 25", "at - 25", "of - 15", "every - 10", "yes - 1");
         assertThat(underTest.createWordCountList(wordCountMap), is(wordCountList));
     }
 

@@ -9,16 +9,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.Comparator.reverseOrder;
+import static java.util.Map.Entry.comparingByValue;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
 public class WordCount {
+
+    private static final String DOUBLE_QUOTE = "\"";
+    private static final String COMMA = ",";
+
+
     public List<String> createWordCountList(Map<String, Integer> wordCountMap) {
         return wordCountMap.entrySet()
                 .stream()
+                .sorted(comparingByValue(reverseOrder()))
                 .map(entry -> entry.getKey() + " - " + entry.getValue())
                 .collect(toList());
     }
@@ -34,7 +41,8 @@ public class WordCount {
         try(Stream<String> lines = Files.lines(Paths.get(uri), Charset.defaultCharset())) {
             words = lines
                     .map(line -> line
-                            .replaceAll("[^a-zA-Z]", " ")
+                            .replaceAll(DOUBLE_QUOTE, " ")
+                            .replaceAll(COMMA, " ")
                             .split("[\\s]+"))
                     .flatMap(Arrays::stream)
                     .filter(word -> word.length() > 0)
