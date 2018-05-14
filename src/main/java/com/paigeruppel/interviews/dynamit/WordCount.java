@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static java.util.Comparator.reverseOrder;
+import static java.util.Map.Entry.comparingByKey;
 import static java.util.Map.Entry.comparingByValue;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
@@ -21,13 +22,18 @@ public class WordCount {
     private static final String DOUBLE_QUOTE = "\"";
     private static final String COMMA = ",";
     private static final String HYPHEN = "-";
+    private static final String QUESTION_MARK = "\\?";
     private static final String SENTENCE_ENDING_PERIOD = "(?<![A-Z][a-z])\\.";
 
+    // still need to deal with digits - timestamp
 
     public List<String> createWordCountList(Map<String, Integer> wordCountMap) {
         return wordCountMap.entrySet()
                 .stream()
-                .sorted(comparingByValue(reverseOrder()))
+                .sorted(Map.Entry.<String, Integer>
+                    comparingByValue()
+                        .reversed()
+                    .thenComparing(comparingByKey()))
                 .map(entry -> entry.getKey() + " - " + entry.getValue())
                 .collect(toList());
     }
@@ -47,6 +53,7 @@ public class WordCount {
                             .replaceAll(COMMA, " ")
                             .replaceAll(HYPHEN, " ")
                             .replaceAll(SENTENCE_ENDING_PERIOD, " ")
+                            .replaceAll(QUESTION_MARK, " ")
                             .split("[\\s]+"))
                     .flatMap(Arrays::stream)
                     .filter(word -> word.length() > 0)

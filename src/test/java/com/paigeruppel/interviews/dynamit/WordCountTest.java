@@ -28,7 +28,7 @@ public class WordCountTest {
         wordCountMap.put("of", 15);
         wordCountMap.put("yes", 1);
         wordCountMap.put("at", 25);
-        List<String> wordCountList = Arrays.asList("the - 25", "at - 25", "of - 15", "every - 10", "yes - 1");
+        List<String> wordCountList = Arrays.asList("at - 25", "the - 25", "of - 15", "every - 10", "yes - 1");
         assertThat(underTest.createWordCountList(wordCountMap), is(wordCountList));
     }
 
