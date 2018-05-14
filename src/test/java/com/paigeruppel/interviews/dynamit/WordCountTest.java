@@ -20,27 +20,41 @@ public class WordCountTest {
     }
 
     @Test
-    public void shouldConvertAWordCountMapIntoAListOfFormattedStrings() {
-        Map<String, Integer> wordCountMap = new HashMap<>();
-        wordCountMap.put("the", 25);
-        List<String> wordCountList = Arrays.asList("the - 25");
-        assertThat(underTest.createWordCountList(wordCountMap), is(wordCountList));
-    }
-
-    @Test
     public void shouldConvertAWordCountMapWithMultipleEntriesIntoAListOfFormattedStrings() {
-        Map<String, Integer> wordCountMap = new HashMap<>();
-        wordCountMap.put("the", 25);
-        wordCountMap.put("every", 10);
+        Map<String, Long> wordCountMap = new HashMap<>();
+        wordCountMap.put("the", Long.valueOf(25));
+        wordCountMap.put("every", Long.valueOf(10));
         List<String> wordCountList = Arrays.asList("the - 25", "every - 10");
         assertThat(underTest.createWordCountList(wordCountMap), is(wordCountList));
     }
 
     @Test
-    public void shouldConvertAListOfWordsIntoAMapOfWordAndOccurences() {
+    public void shouldConvertAListOfWordsIntoAMapOfWordAndOccurrences() {
         List<String> words = Arrays.asList("hello", "hello");
-        Map<String, Integer> wordCountMap = new HashMap<>();
-        wordCountMap.put("hello", 2);
+        Map<String, Long> wordCountMap = new HashMap<>();
+        wordCountMap.put("hello", Long.valueOf(2));
+        assertThat(underTest.createWordCountMap(words), is(wordCountMap));
+    }
+
+    @Test
+    public void shouldConvertAnExtendedListOfWordsIntoAMapOfWordAndOccurrences() {
+        List<String> words = Arrays.asList(
+                "hello",
+                "there",
+                "person",
+                "wow",
+                "person",
+                "hello",
+                "hello",
+                "world"
+        );
+        Map<String, Long> wordCountMap = new HashMap<>();
+        wordCountMap.put("hello", Long.valueOf(3));
+        wordCountMap.put("there", Long.valueOf(1));
+        wordCountMap.put("person", Long.valueOf(2));
+        wordCountMap.put("wow", Long.valueOf(1));
+        wordCountMap.put("world", Long.valueOf(1));
+
         assertThat(underTest.createWordCountMap(words), is(wordCountMap));
     }
 
