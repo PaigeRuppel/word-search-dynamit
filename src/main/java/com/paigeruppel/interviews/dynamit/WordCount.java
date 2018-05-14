@@ -20,6 +20,8 @@ public class WordCount {
 
     private static final String DOUBLE_QUOTE = "\"";
     private static final String COMMA = ",";
+    private static final String HYPHEN = "-";
+    private static final String SENTENCE_ENDING_PERIOD = "(?<![A-Z][a-z])\\.";
 
 
     public List<String> createWordCountList(Map<String, Integer> wordCountMap) {
@@ -43,6 +45,8 @@ public class WordCount {
                     .map(line -> line
                             .replaceAll(DOUBLE_QUOTE, " ")
                             .replaceAll(COMMA, " ")
+                            .replaceAll(HYPHEN, " ")
+                            .replaceAll(SENTENCE_ENDING_PERIOD, " ")
                             .split("[\\s]+"))
                     .flatMap(Arrays::stream)
                     .filter(word -> word.length() > 0)

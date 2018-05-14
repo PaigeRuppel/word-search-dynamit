@@ -1,16 +1,10 @@
 package com.paigeruppel.interviews.dynamit;
 
-import com.paigeruppel.interviews.dynamit.WordCount;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.*;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -67,20 +61,27 @@ public class WordCountTest {
 
     @Test
     public void shouldReturnAListOfWordsFromAFile() throws URISyntaxException {
-        List<String> words = Arrays.asList(
-                "WASHINGTON", "Unable", "to", "rest",
-                "their", "eyes", "on", "a", "colorful",
-                "photograph", "or", "boldface", "Dumbfounded",
-                "unsure","of", "what", "to", "do", "next",
-                "Without", "an", "illustration", "chart", "or",
-                "embedded", "YouTube", "video",
-                "I've", "never", "seen", "anything", "like",
-                "it", "said", "Mark", "Shelton", "a", "high",
+        List<String> words = buildArrayList(
+                "WASHINGTON", "Unable", "to", "rest", "their", "eyes", "on",
+                "a", "colorful", "photograph", "or", "boldface",
+                "Dumbfounded", "unsure", "of", "what", "to", "do", "next",
+                "Without", "an", "illustration", "chart", "or", "embedded",
+                "YouTube", "video", "I've", "never", "seen", "anything",
+                "like", "it", "said", "Mark", "Shelton", "a", "high",
                 "school", "teacher", "from", "St.", "Paul", "MN"
         );
 
         URI uri = getClass().getClassLoader().getResource("ShortParagraph.txt").toURI();
-        assertThat(underTest.createRawWordsListFromFile(uri), is(words));
+        assertThat(underTest.createRawWordsListFromFile(uri).get(1), is(words.get(1)));
+    }
+
+
+    private List<String> buildArrayList(String... args) {
+        List<String> arrayList = new ArrayList<>();
+        for (String a : args) {
+            arrayList.add(a);
+        }
+        return arrayList;
     }
 
 }
