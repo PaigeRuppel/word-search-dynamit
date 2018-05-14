@@ -33,11 +33,15 @@ public class WordCount {
         List<String> words = new ArrayList<>();
         try(Stream<String> lines = Files.lines(Paths.get(uri), Charset.defaultCharset())) {
             words = lines
-                    .map(line -> line.split("[\\s]+"))
+                    .map(line -> line
+                            .replaceAll("[^a-zA-Z]", " ")
+                            .split("[\\s]+"))
                     .flatMap(Arrays::stream)
+                    .filter(word -> word.length() > 0)
                     .collect(toList());
         }
         catch (IOException e) {
+
         }
         return words;
     }

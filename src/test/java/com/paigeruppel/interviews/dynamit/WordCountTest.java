@@ -70,9 +70,6 @@ public class WordCountTest {
         assertThat(underTest.createWordCountMap(words), is(wordCountMap));
     }
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-
     @Test
     public void shouldReturnAListOfWordsFromAFile() throws URISyntaxException {
         List<String> words = Arrays.asList(
@@ -81,7 +78,10 @@ public class WordCountTest {
                 "photograph", "or", "boldface", "Dumbfounded",
                 "unsure","of", "what", "to", "do", "next",
                 "Without", "an", "illustration", "chart", "or",
-                "embedded", "YouTube", "video"
+                "embedded", "YouTube", "video",
+                "I've", "never", "seen", "anything", "like",
+                "it", "said", "Mark", "Shelton", "a", "high",
+                "school", "teacher", "from", "St.", "Paul", "MN"
         );
 
         URI uri = getClass().getClassLoader().getResource("ShortParagraph.txt").toURI();
