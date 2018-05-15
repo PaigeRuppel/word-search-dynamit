@@ -9,23 +9,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import static java.util.Comparator.reverseOrder;
 import static java.util.Map.Entry.comparingByKey;
-import static java.util.Map.Entry.comparingByValue;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
 public class WordCount {
 
-    private static final String DOUBLE_QUOTE = "\"";
-    private static final String COMMA = ",";
-    private static final String HYPHEN = "-";
-    private static final String QUESTION_MARK = "\\?";
-    private static final String SENTENCE_ENDING_PERIOD = "(?<![A-Z][a-z])\\.";
+    private static final String PUNCTUATION = "\"|—|,|\\?|(?<![A-Z][a-z])\\.";
 
-    // still need to deal with digits - timestamp
 
     public List<String> createWordCountList(Map<String, Integer> wordCountMap) {
         return wordCountMap.entrySet()
@@ -44,16 +39,14 @@ public class WordCount {
         return wordCountMap;
     }
 
+    // would be nice to be able to add behavior parameterization here? give option of deciding
+    // what to filter out at runtime...
     public List<String> createRawWordsListFromFile(URI uri) {
         List<String> words = new ArrayList<>();
         try(Stream<String> lines = Files.lines(Paths.get(uri), Charset.defaultCharset())) {
             words = lines
                     .map(line -> line
-                            .replaceAll(DOUBLE_QUOTE, " ")
-                            .replaceAll(COMMA, " ")
-                            .replaceAll(HYPHEN, " ")
-                            .replaceAll(SENTENCE_ENDING_PERIOD, " ")
-                            .replaceAll(QUESTION_MARK, " ")
+                            .replaceAll(PUNCTUATION, " ")
                             .split("[\\s]+"))
                     .flatMap(Arrays::stream)
                     .filter(word -> word.length() > 0)
@@ -64,4 +57,6 @@ public class WordCount {
         }
         return words;
     }
+
+    Predicate<String> nonWordFilter = Pattern.compile(PUNCTUATION).asPredicate();
 }

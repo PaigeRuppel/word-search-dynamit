@@ -68,11 +68,17 @@ public class WordCountTest {
                 "Without", "an", "illustration", "chart", "or", "embedded",
                 "YouTube", "video", "I've", "never", "seen", "anything",
                 "like", "it", "said", "Mark", "Shelton", "a", "high",
-                "school", "teacher", "from", "St.", "Paul", "MN"
+                "school", "teacher", "from", "St.", "Paul", "MN",
+                "There", "are", "no", "bullet", "points", "no", "highlighted",
+                "parts", "I've", "looked", "everywhere", "there's", "nothing", "here", "but", "words",
+                "At", "a", "deafening", "sigh", "was", "heard", "across", "the",
+                "country", "as", "the", "nation", "grappled", "with", "the", "daunting",
+                "cascade", "of", "syllables", "whose", "unfamiliar", "letter-upon-letter", "structure",
+                "stretched", "on", "for", "an", "endless", "words"
         );
 
         URI uri = getClass().getClassLoader().getResource("ShortParagraph.txt").toURI();
-        assertThat(underTest.createRawWordsListFromFile(uri).get(1), is(words.get(1)));
+        assertThat(underTest.createRawWordsListFromFile(uri), is(words));
     }
 
 
