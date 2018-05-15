@@ -19,10 +19,6 @@ import static java.util.stream.Collectors.toMap;
 
 public class WordCount {
 
-    private static final String PUNCTUATION = "\"|—|,|\\?|";
-    private static final String SENTENCE_ENDING_PERIOD = "(?<![A-Z][a-z])\\.";
-    private static final String TIMESTAMP = "(1[012]|[1-9]):[0-5][0-9](\\\\s)?(?i)(a.m.|p.m.)";
-
     public List<String> createWordCountList(Map<String, Integer> wordCountMap) {
         return wordCountMap.entrySet()
                 .stream()
@@ -35,13 +31,10 @@ public class WordCount {
     }
 
     public Map<String, Integer> createWordCountMap(List<String> words) {
-        Map<String, Integer> wordCountMap = words.stream()
-                                            .collect(toMap(word -> word.toLowerCase(), word -> 1, Integer::sum));
-        return wordCountMap;
+        return words.stream()
+                .collect(toMap(word -> word.toLowerCase(), word -> 1, Integer::sum));
     }
 
-    // would be nice to be able to add behavior parameterization here? give option of deciding
-    // what to filter out at runtime...
     public List<String> createRawWordsListFromFile(URI uri, String regex, Predicate<String> patternToMatch) {
         List<String> words = new ArrayList<>();
         try(Stream<String> lines = Files.lines(Paths.get(uri), Charset.defaultCharset())) {
