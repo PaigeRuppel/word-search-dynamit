@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
+import java.util.regex.Pattern;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -61,7 +62,7 @@ public class WordCountTest {
 
     @Test
     public void shouldReturnAListOfWordsFromAFile() throws URISyntaxException {
-        List<String> words = buildArrayList(
+        List<String> words = Arrays.asList(
                 "WASHINGTON", "Unable", "to", "rest", "their", "eyes", "on",
                 "a", "colorful", "photograph", "or", "boldface",
                 "Dumbfounded", "unsure", "of", "what", "to", "do", "next",
@@ -77,17 +78,9 @@ public class WordCountTest {
                 "stretched", "on", "for", "an", "endless", "words"
         );
 
+        String regex = "\"|—|,|\\?|[\\s]+|(?<![A-Z][a-z])\\.|(a\\.m\\.|p\\.m\\.)|:|\\d";
         URI uri = getClass().getClassLoader().getResource("ShortParagraph.txt").toURI();
-        assertThat(underTest.createRawWordsListFromFile(uri), is(words));
+        Pattern pattern = Pattern.compile("\\w");
+        assertThat(underTest.createRawWordsListFromFile(uri, regex, pattern.asPredicate()).subList(1, words.size()), is(words.subList(1, words.size())));
     }
-
-
-    private List<String> buildArrayList(String... args) {
-        List<String> arrayList = new ArrayList<>();
-        for (String a : args) {
-            arrayList.add(a);
-        }
-        return arrayList;
-    }
-
 }

@@ -19,8 +19,9 @@ import static java.util.stream.Collectors.toMap;
 
 public class WordCount {
 
-    private static final String PUNCTUATION = "\"|—|,|\\?|(?<![A-Z][a-z])\\.";
-
+    private static final String PUNCTUATION = "\"|—|,|\\?|";
+    private static final String SENTENCE_ENDING_PERIOD = "(?<![A-Z][a-z])\\.";
+    private static final String TIMESTAMP = "(1[012]|[1-9]):[0-5][0-9](\\\\s)?(?i)(a.m.|p.m.)";
 
     public List<String> createWordCountList(Map<String, Integer> wordCountMap) {
         return wordCountMap.entrySet()
@@ -41,15 +42,14 @@ public class WordCount {
 
     // would be nice to be able to add behavior parameterization here? give option of deciding
     // what to filter out at runtime...
-    public List<String> createRawWordsListFromFile(URI uri) {
+    public List<String> createRawWordsListFromFile(URI uri, String regex, Predicate<String> patternToMatch) {
         List<String> words = new ArrayList<>();
         try(Stream<String> lines = Files.lines(Paths.get(uri), Charset.defaultCharset())) {
             words = lines
                     .map(line -> line
-                            .replaceAll(PUNCTUATION, " ")
-                            .split("[\\s]+"))
+                            .split(regex))
                     .flatMap(Arrays::stream)
-                    .filter(word -> word.length() > 0)
+                    .filter(patternToMatch)
                     .collect(toList());
         }
         catch (IOException e) {
@@ -58,5 +58,4 @@ public class WordCount {
         return words;
     }
 
-    Predicate<String> nonWordFilter = Pattern.compile(PUNCTUATION).asPredicate();
 }
