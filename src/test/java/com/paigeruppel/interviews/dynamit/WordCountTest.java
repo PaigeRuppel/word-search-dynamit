@@ -41,7 +41,13 @@ public class WordCountTest {
 
     @Test
     public void shouldConvertToMapAndIgnoreCase() {
-        assertThat(underTest.createWordCountMap(Arrays.asList("Wow", "wow", "WoW")), hasEntry("wow", 3));
+        Map<String, Integer> wordCounts = createWordCountMap();
+        assertThat(wordCounts, hasEntry("wow", 3));
+    }
+
+    private Map<String, Integer> createWordCountMap() {
+        String[] words = {"Wow", "wow", "Wow"};
+        return underTest.createWordCountMap(Arrays.asList(words));
     }
 
     @Test
