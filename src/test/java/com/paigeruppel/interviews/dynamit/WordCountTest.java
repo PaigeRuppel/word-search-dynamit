@@ -24,12 +24,21 @@ public class WordCountTest {
     }
 
     @Test
-    public void shouldConvertAWordCountMapWithMultipleEntriesIntoAnOrderedListOfFormattedStrings() {
+    public void shouldSortByWordCountDescending() {
         Map<String, Integer> wordCountMap = new HashMap<>();
         wordCountMap.put("the", 25);
         wordCountMap.put("every", 10);
-        wordCountMap.put("at", 25);
-        assertThat(underTest.createWordCountList(wordCountMap), contains("at - 25", "the - 25", "every - 10"));
+        wordCountMap.put("at", 15);
+        assertThat(underTest.createWordCountList(wordCountMap), contains("the - 25", "at - 15", "every - 10"));
+    }
+
+    @Test
+    public void shouldSortWordsAlphabeticallyWhenCountMatches() {
+        Map<String, Integer> wordCountMap = new HashMap<>();
+        wordCountMap.put("the", 20);
+        wordCountMap.put("at", 20);
+        wordCountMap.put("yes", 20);
+        assertThat(underTest.createWordCountList(wordCountMap), contains("at - 20", "the - 20", "yes - 20"));
     }
 
     @Test
@@ -43,8 +52,6 @@ public class WordCountTest {
         Map<String, Integer> wordCounts = underTest.createWordCountMap("Wow", "WOW", "WoW");
         assertThat(wordCounts, hasEntry("wow", 3));
     }
-
-
 
     @Test
     public void shouldReturnAListOfWordsFromAFile() throws URISyntaxException {
