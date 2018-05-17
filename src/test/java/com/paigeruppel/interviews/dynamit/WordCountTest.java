@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.hasEntry;
 import static org.junit.Assert.assertThat;
 
 
@@ -35,8 +36,7 @@ public class WordCountTest {
     public void shouldConvertAListOfWordsIntoAMapOfWordAndOccurrences() {
         List<String> words = Arrays.asList("hello", "hello");
         Map<String, Integer> wordCountMap = new HashMap<>();
-        wordCountMap.put("hello", 2);
-        assertThat(underTest.createWordCountMap(words), is(wordCountMap));
+        assertThat(underTest.createWordCountMap(words), hasEntry("hello", 2));
     }
 
     @Test
