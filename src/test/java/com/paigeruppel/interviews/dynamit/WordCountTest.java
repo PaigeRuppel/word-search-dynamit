@@ -72,8 +72,17 @@ public class WordCountTest {
         );
 
         String regex = "\"|—|,|\\?|[\\s]+|(?<![A-Z][a-z])\\.|(a\\.m\\.|p\\.m\\.)|:|\\d";
-        URI uri = getClass().getClassLoader().getResource("ShortParagraph.txt").toURI();
+        URI uri = testFileUri();
         Pattern pattern = Pattern.compile("\\w");
         assertThat(underTest.createRawWordsListFromFile(uri, regex, pattern.asPredicate()).subList(1, words.size()), is(words.subList(1, words.size())));
+    }
+
+    public URI testFileUri() throws URISyntaxException {
+        return getClass().getClassLoader().getResource("ShortParagraph.txt").toURI();
+    }
+
+    @Test(expected = WordCount.FileReadingException.class)
+    public void shouldThrowFileReadingExceptionOnReadingFailure() throws URISyntaxException{
+        underTest.createRawWordsListFromFile(new URI("file:///does/not/exist"), null, null);
     }
 }

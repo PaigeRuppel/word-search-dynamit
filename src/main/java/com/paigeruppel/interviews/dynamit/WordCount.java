@@ -13,6 +13,7 @@ import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import static java.lang.String.format;
 import static java.util.Map.Entry.comparingByKey;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
@@ -50,9 +51,15 @@ public class WordCount {
                     .collect(toList());
         }
         catch (IOException e) {
-
+            throw new RuntimeException(e);
         }
         return words;
+    }
+
+    public class FileReadingException extends RuntimeException {
+        public FileReadingException(URI uri, Exception cause) {
+            super(format("Problem reading file from [%s].", uri), cause);
+        }
     }
 
 }
