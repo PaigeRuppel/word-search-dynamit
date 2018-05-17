@@ -9,6 +9,7 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
 
 
@@ -27,8 +28,7 @@ public class WordCountTest {
         wordCountMap.put("the", 25);
         wordCountMap.put("every", 10);
         wordCountMap.put("at", 25);
-        List<String> wordCountList = Arrays.asList("at - 25", "the - 25", "every - 10");
-        assertThat(underTest.createWordCountList(wordCountMap), is(wordCountList));
+        assertThat(underTest.createWordCountList(wordCountMap), contains("at - 25", "the - 25", "every - 10"));
     }
 
     @Test
