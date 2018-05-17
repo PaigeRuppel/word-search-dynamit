@@ -51,7 +51,7 @@ public class WordCount {
                     .collect(toList());
         }
         catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FileReadingException(uri, e);
         }
         return words;
     }
