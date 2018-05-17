@@ -34,21 +34,17 @@ public class WordCountTest {
 
     @Test
     public void shouldConvertAListOfWordsIntoAMapOfWordAndOccurrences() {
-        List<String> words = Arrays.asList("hello", "hello");
-        Map<String, Integer> wordCountMap = new HashMap<>();
-        assertThat(underTest.createWordCountMap(words), hasEntry("hello", 2));
+        Map<String, Integer> wordCountMap = underTest.createWordCountMap("hello", "hello");
+        assertThat(wordCountMap, hasEntry("hello", 2));
     }
 
     @Test
     public void shouldConvertToMapAndIgnoreCase() {
-        Map<String, Integer> wordCounts = createWordCountMap();
+        Map<String, Integer> wordCounts = underTest.createWordCountMap("Wow", "WOW", "WoW");
         assertThat(wordCounts, hasEntry("wow", 3));
     }
 
-    private Map<String, Integer> createWordCountMap() {
-        String[] words = {"Wow", "wow", "Wow"};
-        return underTest.createWordCountMap(Arrays.asList(words));
-    }
+
 
     @Test
     public void shouldReturnAListOfWordsFromAFile() throws URISyntaxException {

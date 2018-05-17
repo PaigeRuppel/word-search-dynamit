@@ -30,6 +30,10 @@ public class WordCount {
                 .collect(toList());
     }
 
+    public Map<String, Integer> createWordCountMap(String... words) {
+        return createWordCountMap(Arrays.asList(words));
+    }
+
     public Map<String, Integer> createWordCountMap(List<String> words) {
         return words.stream()
                 .collect(toMap(word -> word.toLowerCase(), word -> 1, Integer::sum));
