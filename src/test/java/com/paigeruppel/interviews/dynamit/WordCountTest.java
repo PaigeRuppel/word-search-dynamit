@@ -40,22 +40,8 @@ public class WordCountTest {
     }
 
     @Test
-    public void shouldConvertAListOfWordsIntoAMapOfWordAndOccurrencesIgnoresCase() {
-        List<String> words = Arrays.asList(
-                "hello",
-                "hello",
-                "world",
-                "wow",
-                "Person",
-                "person",
-                "WoW",
-                "HELLO");
-        Map<String, Integer> wordCountMap = new HashMap<>();
-        wordCountMap.put("hello", 3);
-        wordCountMap.put("person", 2);
-        wordCountMap.put("wow", 2);
-        wordCountMap.put("world", 1);
-        assertThat(underTest.createWordCountMap(words), is(wordCountMap));
+    public void shouldConvertToMapAndIgnoreCase() {
+        assertThat(underTest.createWordCountMap(Arrays.asList("Wow", "wow", "WoW")), hasEntry("wow", 3));
     }
 
     @Test
