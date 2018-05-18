@@ -41,10 +41,5 @@ public class WordCount {
         return reader.collect(toMap(word -> word.toLowerCase(), word -> 1, Integer::sum));
     }
 
-    public class FileReadingException extends RuntimeException {
-        public FileReadingException(URI uri, Exception cause) {
-            super(format("Problem reading file from [%s].", uri), cause);
-        }
-    }
 
 }

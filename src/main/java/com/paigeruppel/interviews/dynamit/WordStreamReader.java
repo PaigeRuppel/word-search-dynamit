@@ -1,6 +1,7 @@
 package com.paigeruppel.interviews.dynamit;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -14,6 +15,10 @@ import static java.util.Arrays.asList;
 import static java.util.stream.Stream.concat;
 
 public class WordStreamReader {
+
+    public interface FileStreamer {
+        Stream<String> stream() throws IOException;
+    }
 
     private static final Pattern WORD_PATTERN = Pattern.compile("([\\w-']+)");
 
@@ -40,6 +45,15 @@ public class WordStreamReader {
     /*Constructor to support testing*/
     public WordStreamReader(String... lines) {
         this.lines = asList(lines).stream();
+    }
+
+    /*Constructor to support testing*/
+    public WordStreamReader(FileStreamer streamer) {
+        try {
+            this.lines = streamer.stream();
+        } catch (IOException e) {
+            throw new FileReadingException(e);
+        }
     }
 
     public Stream<String> stream() {

@@ -44,37 +44,4 @@ public class WordCountTest {
         Map<String, Integer> wordCountMap = underTest.createWordCountMap();
         assertThat(underTest.createWordCountList(wordCountMap), contains("at - 2", "the - 2", "boardwalk - 1", "sea - 1"));
     }
-
-//    @Test
-//    public void shouldReturnAListOfWordsFromAFile() throws URISyntaxException {
-////        List<String> words = Arrays.asList(
-////                "WASHINGTON", "Unable", "to", "rest", "their", "eyes", "on",
-////                "a", "colorful", "photograph", "or", "boldface",
-////                "Dumbfounded", "unsure", "of", "what", "to", "do", "next",
-////                "Without", "an", "illustration", "chart", "or", "embedded",
-////                "YouTube", "video", "I've", "never", "seen", "anything",
-////                "like", "it", "said", "Mark", "Shelton", "a", "high",
-////                "school", "teacher", "from", "St.", "Paul", "MN",
-////                "There", "are", "no", "bullet", "points", "no", "highlighted",
-////                "parts", "I've", "looked", "everywhere", "there's", "nothing", "here", "but", "words",
-////                "At", "a", "deafening", "sigh", "was", "heard", "across", "the",
-////                "country", "as", "the", "nation", "grappled", "with", "the", "daunting",
-////                "cascade", "of", "syllables", "whose", "unfamiliar", "letter-upon-letter", "structure",
-////                "stretched", "on", "for", "an", "endless", "words"
-////        );
-////
-////        String regex = "\"|—|,|\\?|[\\s]+|(?<![A-Z][a-z])\\.|(a\\.m\\.|p\\.m\\.)|:|\\d";
-////        URI uri = testFileUri("ShortParagraph.txt");
-////        Pattern pattern = Pattern.compile("\\w");
-////        assertThat(underTest.createRawWordsListFromFile(uri, regex, pattern.asPredicate()).subList(1, words.size()), is(words.subList(1, words.size())));
-//    }
-
-    public URI testFileUri(String name) throws URISyntaxException {
-        return getClass().getClassLoader().getResource(name).toURI();
-    }
-
-//    @Test(expected=WordCount.FileReadingException.class)
-//    public void shouldThrowFileReadingExceptionOnReadingFailure() throws URISyntaxException{
-//        underTest.createRawWordsListFromFile(new URI("file:///does/not/exist"), null, null);
-//    }
 }

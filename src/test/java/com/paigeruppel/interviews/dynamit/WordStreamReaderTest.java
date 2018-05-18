@@ -47,4 +47,16 @@ public class WordStreamReaderTest {
         Stream<String> result = underTest.stream();
         assertThat(result.collect(toList()), contains("first", "line", "second", "line", "third", "line"));
     }
+
+
+    @Test(expected=FileReadingException.class)
+    public void shouldThrowFileReadingExceptionOnReadingFailure() throws IOException {
+            WordStreamReader.FileStreamer badStreamer = new WordStreamReader.FileStreamer() {
+            @Override
+            public Stream<String> stream() throws IOException {
+                throw new IOException();
+            }
+        };
+        new WordStreamReader(badStreamer);
+    }
 }
