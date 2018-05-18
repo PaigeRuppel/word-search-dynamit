@@ -9,6 +9,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.lang.String.format;
@@ -37,23 +38,8 @@ public class WordCount {
     }
 
     public Map<String, Integer> createWordCountMap() {
-        return reader.collect(toMap(identity(), word -> 1, Integer::sum));
+        return reader.collect(toMap(word -> word.toLowerCase(), word -> 1, Integer::sum));
     }
-
-//    public List<String> createRawWordsListFromFile(URI uri, String regex, Predicate<String> patternToMatch) {
-//        List<String> words = new ArrayList<>();
-//        try (Stream<String> lines = Files.lines(Paths.get(uri), Charset.defaultCharset())) {
-//            words = lines
-//                    .map(line -> line
-//                            .split(regex))
-//                    .flatMap(Arrays::stream)
-//                    .filter(patternToMatch)
-//                    .collect(toList());
-//        } catch (IOException e) {
-//            throw new FileReadingException(uri, e);
-//        }
-//        return words;
-//    }
 
     public class FileReadingException extends RuntimeException {
         public FileReadingException(URI uri, Exception cause) {

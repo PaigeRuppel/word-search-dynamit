@@ -73,8 +73,8 @@ public class WordCountTest {
         return getClass().getClassLoader().getResource(name).toURI();
     }
 
-    @Test(expected=WordCount.FileReadingException.class)
-    public void shouldThrowFileReadingExceptionOnReadingFailure() throws URISyntaxException{
-        underTest.createRawWordsListFromFile(new URI("file:///does/not/exist"), null, null);
-    }
+//    @Test(expected=WordCount.FileReadingException.class)
+//    public void shouldThrowFileReadingExceptionOnReadingFailure() throws URISyntaxException{
+//        underTest.createRawWordsListFromFile(new URI("file:///does/not/exist"), null, null);
+//    }
 }
