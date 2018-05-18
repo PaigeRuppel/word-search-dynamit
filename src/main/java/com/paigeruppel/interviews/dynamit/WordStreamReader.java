@@ -12,9 +12,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import static java.util.stream.Stream.concat;
+
 public class WordStreamReader {
 
     private final Path wordsFile;
+    private Stream<String> wordStream = Stream.empty();
 
     public WordStreamReader(String filename) throws URISyntaxException {
         wordsFile = Paths.get(getClass().getClassLoader().getResource(filename).toURI());
@@ -33,6 +36,7 @@ public class WordStreamReader {
                 return words;
             }
         };
-        return wordExtractor.apply(Files.lines(wordsFile).findFirst().get()).stream();
+        Files.lines(wordsFile).map(wordExtractor).forEach(lineWords -> wordStream = concat(wordStream, lineWords.stream()));
+        return wordStream;
     }
 }

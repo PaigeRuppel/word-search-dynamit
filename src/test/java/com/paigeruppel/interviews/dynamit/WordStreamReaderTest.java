@@ -34,4 +34,11 @@ public class WordStreamReaderTest {
         Stream<String> result = underTest.stream();
         assertThat(result.collect(toList()), contains("contraction'll", "leave-hyphen"));
     }
+
+    @Test
+    public void shouldReadMultipleLinesAsSingleStream() throws URISyntaxException, IOException {
+        WordStreamReader underTest = new WordStreamReader("MultipleLines.txt");
+        Stream<String> result = underTest.stream();
+        assertThat(result.collect(toList()), contains("first", "line", "second", "line", "third", "line"));
+    }
 }
