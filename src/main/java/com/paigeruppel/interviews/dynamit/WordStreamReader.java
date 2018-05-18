@@ -42,7 +42,7 @@ public class WordStreamReader {
         this.lines = asList(lines).stream();
     }
 
-    public Stream<String> stream() throws IOException {
+    public Stream<String> stream() {
         this.lines.map(wordExtractor).forEach(line -> wordStream = concat(wordStream, line.stream()));
         return wordStream;
     }

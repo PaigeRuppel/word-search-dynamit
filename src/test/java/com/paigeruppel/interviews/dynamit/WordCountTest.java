@@ -19,12 +19,7 @@ import static org.junit.Assert.assertThat;
 
 public class WordCountTest {
 
-    private WordCount underTest;
-
-    @Before
-    public void setup() {
-        underTest = new WordCount();
-    }
+    public WordCount underTest;
 
     @Test
     public void shouldSortByWordCountDescending() {
