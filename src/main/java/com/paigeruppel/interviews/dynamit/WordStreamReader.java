@@ -16,9 +16,8 @@ import static java.util.stream.Stream.concat;
 
 public class WordStreamReader {
 
-    private static final Pattern WORD_PATTERN = Pattern.compile("([\\w-']+)");
+    private static final Pattern WORD_PATTERN = Pattern.compile("(\\b[a-zA-Z'-]+)");
     private final Stream<String> lines;
-
 
     private final Function<String, Collection<String>> wordExtractor = new Function<String, Collection<String>>() {
         @Override
@@ -28,7 +27,7 @@ public class WordStreamReader {
             while (wordBoundaryMatcher.find()) {
                 words.add(wordBoundaryMatcher.group());
             }
-            return words.stream().filter(word -> word.matches("\\D*")).collect(toList());
+            return words;
         }
     };
 

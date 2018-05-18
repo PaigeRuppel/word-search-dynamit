@@ -20,26 +20,25 @@ public class WordCountApp {
 
     private WordCount count;
     private WordStreamReader reader;
-    private Path filePath;
 
     public WordCountApp(String filename) {
-            getPathAndReader(filename);
+            buildStreamReader(filename);
             this.count = new WordCount(reader);
+    }
+
+    private void buildStreamReader(String filename) {
+        try {
+            Path filePath = Paths.get(getSystemResource(filename).toURI());
+            reader = new WordStreamReader(filePath);
+        } catch (Exception ex) {
+            throw new FileReadingException(ex);
+        }
     }
 
     private void printResults() {
         Map<String, Integer> wordCountMap = count.createWordCountMap();
         List<String> results = count.createWordCountList(wordCountMap);
         results.stream().forEach(System.out::println);
-    }
-
-    private void getPathAndReader(String filename) {
-        try {
-            filePath = Paths.get(getSystemResource(filename).toURI());
-            reader = new WordStreamReader(filePath);
-        } catch (Exception ex) {
-            throw new FileReadingException(ex);
-        }
     }
 }
 
