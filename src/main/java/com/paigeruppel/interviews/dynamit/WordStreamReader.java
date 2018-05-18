@@ -16,26 +16,26 @@ import static java.util.stream.Stream.concat;
 
 public class WordStreamReader {
 
+    private static final Pattern WORD_PATTERN = Pattern.compile("([\\w-']+)");
+
     private final Path wordsFile;
+
     private Stream<String> wordStream = Stream.empty();
+
+    private final Function<String, Collection<String>> wordExtractor = line -> {
+        Matcher wordBoundaryMatcher = WORD_PATTERN.matcher(line);
+        Collection<String> words = new ArrayList<>();
+        while(wordBoundaryMatcher.find()) {
+            words.add(wordBoundaryMatcher.group());
+        }
+        return words;
+    };
 
     public WordStreamReader(String filename) throws URISyntaxException {
         wordsFile = Paths.get(getClass().getClassLoader().getResource(filename).toURI());
     }
 
     public Stream<String> stream() throws IOException {
-        Function<String, Collection<String>> wordExtractor = new Function<String, Collection<String>>() {
-            @Override
-            public Collection<String> apply(String line) {
-                Matcher wordBoundaryMatcher = Pattern.compile("([\\w-']+)").matcher(line);
-
-                Collection<String> words = new ArrayList<>();
-                while(wordBoundaryMatcher.find()) {
-                    words.add(wordBoundaryMatcher.group());
-                }
-                return words;
-            }
-        };
         Files.lines(wordsFile).map(wordExtractor).forEach(lineWords -> wordStream = concat(wordStream, lineWords.stream()));
         return wordStream;
     }
