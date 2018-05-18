@@ -50,7 +50,7 @@ public class WordStreamReaderTest {
     }
 
     @Test
-    public void shouldIgnoreDigits() throws URISyntaxException, IOException {
+    public void shouldIgnoreDigits() {
         WordStreamReader underTest = new WordStreamReader("8675309 jenny");
         Stream<String> result = underTest.stream();
         assertThat(result.collect(toList()), contains("jenny"));

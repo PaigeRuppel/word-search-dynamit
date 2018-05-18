@@ -6,9 +6,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
@@ -16,23 +19,19 @@ import static java.util.stream.Stream.concat;
 
 public class WordStreamReader {
 
-    public interface FileStreamer {
-        Stream<String> stream() throws IOException;
-    }
-
     private static final Pattern WORD_PATTERN = Pattern.compile("([\\w-']+)");
-
     private final Stream<String> lines;
+
 
     private final Function<String, Collection<String>> wordExtractor = new Function<String, Collection<String>>() {
         @Override
         public Collection<String> apply(String line) {
             Matcher wordBoundaryMatcher = WORD_PATTERN.matcher(line);
             Collection<String> words = new ArrayList<>();
-            while(wordBoundaryMatcher.find()) {
+            while (wordBoundaryMatcher.find()) {
                 words.add(wordBoundaryMatcher.group());
             }
-            return words;
+            return words.stream().filter(word -> word.matches("\\D*")).collect(Collectors.toList());
         }
     };
 
@@ -59,5 +58,9 @@ public class WordStreamReader {
     public Stream<String> stream() {
         this.lines.map(wordExtractor).forEach(line -> wordStream = concat(wordStream, line.stream()));
         return wordStream;
+    }
+
+    public interface FileStreamer {
+        Stream<String> stream() throws IOException;
     }
 }

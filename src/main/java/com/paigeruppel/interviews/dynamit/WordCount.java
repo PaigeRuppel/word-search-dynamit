@@ -29,6 +29,7 @@ public class WordCount {
     public WordCount(WordStreamReader reader) {
         this.reader = reader.stream();
     }
+
     public List<String> createWordCountList(Map<String, Integer> wordCountMap) {
         return wordCountMap.entrySet()
                 .stream()

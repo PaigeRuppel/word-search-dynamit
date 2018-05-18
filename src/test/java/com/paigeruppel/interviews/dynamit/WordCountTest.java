@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasEntry;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
 
 
@@ -44,4 +45,5 @@ public class WordCountTest {
         Map<String, Integer> wordCountMap = underTest.createWordCountMap();
         assertThat(underTest.createWordCountList(wordCountMap), contains("at - 2", "the - 2", "boardwalk - 1", "sea - 1"));
     }
+
 }
