@@ -36,11 +36,7 @@ public class WordCount {
                 .collect(toList());
     }
 
-    public Map<String, Integer> createWordCountMap(String... words) {
-        return createWordCountMap(Arrays.asList(words));
-    }
-
-    public Map<String, Integer> createWordCountMap(List<String> words) {
+    public Map<String, Integer> createWordCountMap() {
         return reader.collect(toMap(identity(), word -> 1, Integer::sum));
     }
 
