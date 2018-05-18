@@ -1,10 +1,8 @@
 package com.paigeruppel.interviews.dynamit;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.function.Function;
@@ -12,31 +10,40 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import static java.util.Arrays.asList;
 import static java.util.stream.Stream.concat;
 
 public class WordStreamReader {
 
     private static final Pattern WORD_PATTERN = Pattern.compile("([\\w-']+)");
 
-    private final Path wordsFile;
+    private final Stream<String> lines;
+
+    private final Function<String, Collection<String>> wordExtractor = new Function<String, Collection<String>>() {
+        @Override
+        public Collection<String> apply(String line) {
+            Matcher wordBoundaryMatcher = WORD_PATTERN.matcher(line);
+            Collection<String> words = new ArrayList<>();
+            while(wordBoundaryMatcher.find()) {
+                words.add(wordBoundaryMatcher.group());
+            }
+            return words;
+        }
+    };
 
     private Stream<String> wordStream = Stream.empty();
 
-    private final Function<String, Collection<String>> wordExtractor = line -> {
-        Matcher wordBoundaryMatcher = WORD_PATTERN.matcher(line);
-        Collection<String> words = new ArrayList<>();
-        while(wordBoundaryMatcher.find()) {
-            words.add(wordBoundaryMatcher.group());
-        }
-        return words;
-    };
+    public WordStreamReader(Path filepath) throws IOException {
+        this.lines = Files.lines(filepath);
+    }
 
-    public WordStreamReader(String filename) throws URISyntaxException {
-        wordsFile = Paths.get(getClass().getClassLoader().getResource(filename).toURI());
+    /*Constructor to support testing*/
+    public WordStreamReader(String... lines) {
+        this.lines = asList(lines).stream();
     }
 
     public Stream<String> stream() throws IOException {
-        Files.lines(wordsFile).map(wordExtractor).forEach(lineWords -> wordStream = concat(wordStream, lineWords.stream()));
+        this.lines.map(wordExtractor).forEach(line -> wordStream = concat(wordStream, line.stream()));
         return wordStream;
     }
 }
