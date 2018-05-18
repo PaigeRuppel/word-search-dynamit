@@ -27,4 +27,11 @@ public class WordStreamReaderTest {
         Stream<String> result = underTest.stream();
         assertThat(result.collect(toList()), contains("comma", "word", "quotation"));
     }
+
+    @Test
+    public void shouldAllowSomePunctuationInsideWords() throws URISyntaxException, IOException {
+        WordStreamReader underTest = new WordStreamReader("ContractionsHyphens.txt");
+        Stream<String> result = underTest.stream();
+        assertThat(result.collect(toList()), contains("contraction'll", "leave-hyphen"));
+    }
 }

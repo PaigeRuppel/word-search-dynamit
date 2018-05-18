@@ -24,7 +24,7 @@ public class WordStreamReader {
         Function<String, Collection<String>> wordExtractor = new Function<String, Collection<String>>() {
             @Override
             public Collection<String> apply(String line) {
-                Matcher wordBoundaryMatcher = Pattern.compile("([\\w]+)").matcher(line);
+                Matcher wordBoundaryMatcher = Pattern.compile("([\\w-']+)").matcher(line);
 
                 Collection<String> words = new ArrayList<>();
                 while(wordBoundaryMatcher.find()) {
