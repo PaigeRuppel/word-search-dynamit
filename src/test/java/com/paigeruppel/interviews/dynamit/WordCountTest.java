@@ -5,7 +5,10 @@ import org.junit.Test;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -72,16 +75,16 @@ public class WordCountTest {
         );
 
         String regex = "\"|—|,|\\?|[\\s]+|(?<![A-Z][a-z])\\.|(a\\.m\\.|p\\.m\\.)|:|\\d";
-        URI uri = testFileUri();
+        URI uri = testFileUri("ShortParagraph.txt");
         Pattern pattern = Pattern.compile("\\w");
         assertThat(underTest.createRawWordsListFromFile(uri, regex, pattern.asPredicate()).subList(1, words.size()), is(words.subList(1, words.size())));
     }
 
-    public URI testFileUri() throws URISyntaxException {
-        return getClass().getClassLoader().getResource("ShortParagraph.txt").toURI();
+    public URI testFileUri(String name) throws URISyntaxException {
+        return getClass().getClassLoader().getResource(name).toURI();
     }
 
-    @Test(expected = WordCount.FileReadingException.class)
+    @Test(expected=WordCount.FileReadingException.class)
     public void shouldThrowFileReadingExceptionOnReadingFailure() throws URISyntaxException{
         underTest.createRawWordsListFromFile(new URI("file:///does/not/exist"), null, null);
     }
