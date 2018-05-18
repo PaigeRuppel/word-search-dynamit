@@ -3,7 +3,6 @@ package com.paigeruppel.interviews.dynamit;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;

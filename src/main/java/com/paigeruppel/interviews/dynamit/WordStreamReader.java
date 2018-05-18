@@ -1,20 +1,17 @@
 package com.paigeruppel.interviews.dynamit;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.concat;
 
 public class WordStreamReader {
@@ -31,7 +28,7 @@ public class WordStreamReader {
             while (wordBoundaryMatcher.find()) {
                 words.add(wordBoundaryMatcher.group());
             }
-            return words.stream().filter(word -> word.matches("\\D*")).collect(Collectors.toList());
+            return words.stream().filter(word -> word.matches("\\D*")).collect(toList());
         }
     };
 
