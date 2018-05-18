@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.concat;
 
 public class WordStreamReader {
