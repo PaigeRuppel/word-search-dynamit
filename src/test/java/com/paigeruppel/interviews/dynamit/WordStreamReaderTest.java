@@ -19,6 +19,7 @@ public class WordStreamReaderTest {
         Path singleWordFilePath = Paths.get(getClass().getClassLoader().getResource("SingleWord.txt").toURI());
         WordStreamReader underTest = new WordStreamReader(singleWordFilePath);
     }
+
     @Test
     public void shouldReadCleanWords() throws URISyntaxException, IOException {
         WordStreamReader underTest = new WordStreamReader("clean words");
